@@ -1,38 +1,247 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-				<section>
-					<section>Slide 3.1</section>
-					<section>Slide 3.2</section>
-					<section>Slide 3.3</section>
-				</section>
-			</div>
-		</div>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/league.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <style>
+        h4 {
+            font-size: 30pt;
+        }
+        h5 {
+            font-size: 25px;
+        }
+        p {
+            font-size: 18pt;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <a href="https://nestjs.com/">
+                <img src="https://camo.githubusercontent.com/cd952b0ccef3f9542fcafb593f3d6c3efe19961e/68747470733a2f2f646f63732e6e6573746a732e636f6d2f6173736574732f6c6f676f5f746578742e737667"
+                     style="height: 180px; margin: 0 auto 4rem auto;">
+            </a>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			Reveal.initialize({
-				hash: true,
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+            <p>
+                NestJS - платформа для создания эффективных масштабируемых серверных приложений Node.js.
+            </p>
+        </section>
+        <section>
+            <section>
+                <h4>1.1 Установка и структура проекта</h4>
+                <pre data-id="code-animation">
+					<code class="hljs" data-trim data-line-numbers>
+						$ npm i -g @nestjs/cli
+						$ nest new project-name
+					</code>
+				</pre>
+            </section>
+            <section class="fragments">
+                <h4>1.2 Структура</h4>
+                <pre data-id="code-animation">
+					<code class="hljs" data-trim data-line-numbers="1-6|2|3|4|5|6|">
+						src
+							- main.ts
+							- app.module.ts
+							- app.controller.ts
+							- app.service.ts
+							- app.controller.spec.ts
+					</code>
+				</pre>
+            </section>
+            <section class="fragments">1.3 CLI
+                <p></p>
+                <p>Одни из сущностей для быстрой генерации</p>
+                <div class="fragment">
+                    <p>Пример: </p>
+                    <p>
+                            <span class="fragment highlight-current-green">nest</span>
+                            <span class="fragment highlight-current-green">g</span>
+                            <span class="fragment highlight-current-green">mo</span>
+                            <span class="fragment highlight-current-green">test</span>
+                        </p>
+                    </p>
+                </div>
+                <table style="font-size: 20pt">
+                    <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Алиас</th>
+                        <th>Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>controller</td>
+                        <td>co</td>
+                        <td>Генерирует новый контроллер</td>
+                    </tr>
+                    <tr>
+                        <td>interface</td>
+                        <td>interface</td>
+                        <td>генерирует новый интерфейс</td>
+                    </tr>
+                    <tr>
+                        <td>module</td>
+                        <td>mo</td>
+                        <td>Генерирует новый модуль</td>
+                    </tr>
+                    <tr>
+                        <td>service</td>
+                        <td>s</td>
+                        <td>Генерирует новый сервис</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+        <section>
+            <h4> 2. Входной файл</h4>
+            <pre data-id="code-animation">
+                    <code class="hljs" data-trim data-line-numbers>
+                        import { NestFactory } from '@nestjs/core';
+
+                        async function bootstrap() {
+                            const app = await NestFactory.create(ModuleName);
+                            await app.listen(3000);
+                        }
+                        bootstrap();
+                    </code>
+                </pre>
+                <p>Чтобы создать экземпляр приложения Nest, мы используем базовый NestFactory класс.</p>
+                <p>В main.ts приведенном выше примере мы просто запускаем наш HTTP-прослушиватель, который позволяет приложению ожидать входящие HTTP-запросы.</p>
+                </p>
+        </section>
+        <section>
+            <section>
+                <h4>3.1 Контроллер</h4>
+                <p>Контроллеры отвечают за обработку входящих запросов и возврат ответов клиенту.</p>
+                <a>
+                    <img src="https://docs.nestjs.com/assets/Controllers_1.png">
+                </a>
+                <p>
+                    Цель контроллера - получать конкретные запросы для приложения. Механизм маршрутизации контролирует, какой контроллер принимает какие запросы. Часто у каждого контроллера есть более одного маршрута, и разные маршруты могут выполнять разные действия.
+                </p>
+            </section>
+            <section>
+                <h4>3.2. Модель</h4>
+                <p>Для создания базового контроллера мы используем классы и декораторы . Декораторы связывают классы с необходимыми метаданными и позволяют Nest создавать карту маршрутизации (связывать запросы с соответствующими контроллерами).</p>
+                <pre data-id="code-animation">
+                    <code class="hljs" data-trim data-line-numbers>
+                        import { Controller } from '@nestjs/common';
+
+                        @Controller()
+                        export class ControllerName {}
+                    </code>
+                </pre>
+                <p></p>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h4>4.1 Провайдеры</h4>
+                <p>Провайдеры - это фундаментальное понятие в Nest.
+                    Многие из базовых классов Nest могут рассматриваться как провайдеры - сервисы, репозитории, фабрики, помощники и так далее.
+                    Основная идея провайдера заключается в том, что он может быть введен как зависимость; это означает, что объекты могут создавать различные отношения друг с другом, а функция «связывания» экземпляров объектов может быть в значительной степени делегирована системе времени выполнения Nest.</p>
+                <img src="https://docs.nestjs.com/assets/Components_1.png" style="width: 600px">
+            </section>
+            <section class="fragments">
+                <h4>4.2 Модель</h4>
+                <p>Для создания базового сервиса мы также используем классы и декораторы.</p>
+                <pre data-id="code-animation">
+                <code class="hljs" data-trim data-line-numbers>
+                    import { Injectable } from '@nestjs/common';
+
+                    @Injectable()
+                    export class ServiceName {}
+                </code>
+                </pre>
+                <div class="fragment">
+                    <p>Обновленный контроллер с импортом сервиса</p>
+                    <pre data-id="code-animation">
+                        <code class="hljs" data-trim data-line-numbers>
+                            import { Controller } from '@nestjs/common';
+                            import { ServiceName } from 'servicePath';
+
+                            @Controller()
+                            export class TeamController {
+                              constructor(private objectName: ServiceName) {}
+                            }
+                        </code>
+                    </pre>
+                </div>
+            </section>
+        </section>
+        <section data-auto-animate>
+            <h4>5. Модуль</h4>
+            <img src="https://docs.nestjs.com/assets/Modules_1.png" style="width: 600px">
+            <pre data-id="code-animation" style="font-size: 12pt">
+                <code class="hljs" data-trim data-line-numbers>
+                    import { Module } from '@nestjs/common';
+
+                    @Module({
+                      imports: [],
+                      controllers: [],
+                      providers: [],
+                    })
+                    export class ModuleName {}
+                </code>
+            </pre>
+        </section>
+        <section data-auto-animate>
+            <h4>5. Модуль</h4>
+            <pre data-id="code-animation">
+                <code class="hljs" data-trim data-line-numbers>
+                    import { Module } from '@nestjs/common';
+
+                    @Module({
+                      imports: [],
+                      controllers: [ControllerName],
+                      providers: [],
+                    })
+                    export class ModuleName {}
+                </code>
+            </pre>
+            <span style="font-size: 15pt"><em>Добавление контроллера в модуль</em></span>
+        </section>
+        <section data-auto-animate>
+            <h4>5. Модуль</h4>
+            <pre data-id="code-animation">
+                <code class="hljs" data-trim data-line-numbers>
+                    import { Module } from '@nestjs/common';
+
+                    @Module({
+                      imports: [],
+                      controllers: [ControllerName],
+                      providers: [ServiceName],
+                    })
+                    export class ModuleName {}
+                </code>
+            </pre>
+            <span style="font-size: 15pt"><em>Добавление сервиса в модуль</em></span>
+        </section>
+        <section>Всем спасибо!!!</section>
+    </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+</body>
 </html>
